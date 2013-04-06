@@ -1,6 +1,6 @@
 // 1126. Магнитные бури
 // 0.234 s
-// 0.234
+// 0.234 Kb
 
 #include <iostream>
 #include <fstream>
