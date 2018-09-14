@@ -11,3 +11,5 @@
 *.lai
 *.la
 *.a
+timus/.DS_Store
+.DS_Store
