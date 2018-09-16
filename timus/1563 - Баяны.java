@@ -1,34 +1,45 @@
+import javafx.util.Pair;
+
 import java.io.*;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Main {
 
     public static void main(String[] args) throws IOException {
-        boolean oj = System.getProperty("ONLINE_JUDGE") != null;
+        boolean oj = true;
         Reader reader = oj ? new InputStreamReader(System.in) : new FileReader("input.txt");
         Writer writer = oj ? new OutputStreamWriter(System.out) : new FileWriter("output.txt");
         StreamTokenizer in = new StreamTokenizer(new BufferedReader(reader));
         PrintWriter out = new PrintWriter(writer);
 
-        BufferedReader reader1 = new BufferedReader(reader);
-        BufferedWriter writer1 = new BufferedWriter(writer);
+        BufferedReader br = new BufferedReader(reader);
+        BufferedWriter bw = new BufferedWriter(writer);
 
-        Integer n = Integer.parseInt(reader1.readLine());
-        Integer counter = 0;
+        Integer n = Integer.parseInt(br.readLine());
+        String[] line = br.readLine().split(" ");
 
-        ArrayList<String> guests = new ArrayList<>();
+        List<Pair<Integer,Integer>> clients = new ArrayList<>();
+
         for(int i = 0; i < n; i++) {
-            guests.add(reader1.readLine());
-            counter++;
-            if(guests.get(i).contains("+one")) counter++;
+            Pair<Integer,Integer> client = new Pair<>(
+                    i + 1,
+                    Integer.parseInt(line[i])
+            );
+            clients.add(client);
         }
 
-        if (((counter + 2) == 13)) {
-            writer1.write("1400");
-        } else {
-            writer1.write(new Integer ((counter + 2) * 100).toString());
+        Collections.sort(clients, Comparator.comparingInt(Pair::getValue));
+
+        for(int i = 0; i < n; i++) {
+            bw.write(clients.get(i).getKey().toString());
+            bw.write(" ");
+            if(i != 0 && i % 2 == 1) bw.newLine();
         }
-        writer1.flush();
+
+        bw.flush();
 
     }
 }
