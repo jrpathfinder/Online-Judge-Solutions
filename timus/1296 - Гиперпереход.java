@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -10,25 +9,31 @@ public class Main {
         StreamTokenizer in = new StreamTokenizer(new BufferedReader(reader));
         PrintWriter out = new PrintWriter(writer);
 
-        BufferedReader reader1 = new BufferedReader(reader);
-        BufferedWriter writer1 = new BufferedWriter(writer);
+        BufferedReader br = new BufferedReader(reader);
+        BufferedWriter bw = new BufferedWriter(writer);
 
-        Integer n = Integer.parseInt(reader1.readLine());
-        Integer counter = 0;
+        Integer n = Integer.parseInt(br.readLine());
+        int[] p = new int[n];
 
-        ArrayList<String> guests = new ArrayList<>();
         for(int i = 0; i < n; i++) {
-            guests.add(reader1.readLine());
-            counter++;
-            if(guests.get(i).contains("+one")) counter++;
+            p[i] = Integer.parseInt(br.readLine());
         }
 
-        if (((counter + 2) == 13)) {
-            writer1.write("1400");
-        } else {
-            writer1.write(new Integer ((counter + 2) * 100).toString());
-        }
-        writer1.flush();
+        Integer max_ending_here = 0;
+        Integer max_so_far = Integer.MIN_VALUE;
 
+        for(int i = 0; i < p.length; i++) {
+            max_ending_here = max_ending_here + p[i];
+            if(max_ending_here < 0)
+                max_ending_here = 0;
+            else if(max_so_far < max_ending_here)
+                max_so_far = max_ending_here;
+        }
+
+        max_so_far = (max_so_far < 0) ? 0 : max_so_far;
+
+
+        bw.write(max_so_far.toString());
+        bw.flush();
     }
 }

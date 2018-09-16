@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 
 public class Main {
 
@@ -10,25 +9,31 @@ public class Main {
         StreamTokenizer in = new StreamTokenizer(new BufferedReader(reader));
         PrintWriter out = new PrintWriter(writer);
 
-        BufferedReader reader1 = new BufferedReader(reader);
-        BufferedWriter writer1 = new BufferedWriter(writer);
+        BufferedReader br = new BufferedReader(reader);
+        BufferedWriter bw = new BufferedWriter(writer);
 
-        Integer n = Integer.parseInt(reader1.readLine());
-        Integer counter = 0;
+        String line = br.readLine();
 
-        ArrayList<String> guests = new ArrayList<>();
-        for(int i = 0; i < n; i++) {
-            guests.add(reader1.readLine());
-            counter++;
-            if(guests.get(i).contains("+one")) counter++;
+        Integer h = Integer.parseInt(line.split(" ")[0]);
+        Integer w = Integer.parseInt(line.split(" ")[1]);
+        Integer n = Integer.parseInt(line.split(" ")[2]);
+        Integer counter = 1;
+
+
+        int l = -1;
+        for (int i = 0; i < n; i++) {
+            String s = br.readLine();
+            l = l + s.length() + 1;
+            if (l > w) {
+                counter++;
+                l = s.length();
+            }
         }
 
-        if (((counter + 2) == 13)) {
-            writer1.write("1400");
-        } else {
-            writer1.write(new Integer ((counter + 2) * 100).toString());
-        }
-        writer1.flush();
+        Integer result = counter / h;
+        result = (counter % h == 0) ? result : result + 1;
 
+        bw.write(result.toString());
+        bw.flush();
     }
 }
